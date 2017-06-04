@@ -20,9 +20,17 @@ while 1:
         for (ex,ey,ew,eh) in eyes:
             cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
 
-        # smile = smile_cascade.detectMultiScale(roi_gray)
-        # for (ex,ey,ew,eh) in smile:
-        #     cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
+        smile = smile_cascade.detectMultiScale(roi_gray,
+            scaleFactor= 1.7,
+            minNeighbors=22,
+            minSize=(25, 25),
+            flags=cv2.CASCADE_SCALE_IMAGE
+            )
+
+        # Set region of interest for smiles
+        for (x, y, w, h) in smile:
+            
+            cv2.rectangle(roi_color, (x, y), (x+w, y+h), (255, 255, 0), 1)
     
     cv2.imshow('img',img)
     k = cv2.waitKey(30) & 0xff
